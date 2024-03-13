@@ -3,20 +3,20 @@ const connection = require('../database/db');
 class CategoriaService {
     async createCategorias(nome, descricao) {
         try {
-            const query = 'INSERT INTO Categorias (nome, descricao) VALUES (?, ?)';
+            const query = 'INSERT INTO Categorias (nome, descricao) VALUES (?, ?)'
             const [results] = await connection.promise().query(query, [nome, descricao])
-            return { id: results.insertId, nome, descricao };
+            return { id: results.insertId, nome, descricao }
         } catch (error) {
-            console.error('Erro ao criar categoria: ' + error.message);
+            throw 'Erro ao criar categoria: ' + error.message
         }
     }
 
     async exibirTodasCategorias() {
         try {
-            const [results] = await connection.promise().query('SELECT * FROM Categorias');
-            return results;
+            const [results] = await connection.promise().query('SELECT * FROM Categorias')
+            return results
         } catch (error) {
-            throw error;
+            throw error
         }
     }
 
@@ -26,15 +26,15 @@ class CategoriaService {
             const [result] = await connection.promise().query(query, [id])
             return result[0]
         } catch (error) {
-            throw error;
+            throw error
         }
     }
     async deletarCategoria(id) {
         try {
-            const query = 'delete from Categorias where id = ?';
-            return await connection.promise().query(query, [id]);
+            const query = 'delete from Categorias where id = ?'
+            return await connection.promise().query(query, [id])
         } catch (error) {
-            throw error;
+            throw error
         }
     }
 }
