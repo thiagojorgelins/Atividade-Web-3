@@ -11,3 +11,4 @@ router.get('/clientes/email/:email', clienteController.exibirClientePeloEmail)
 router.put('/clientes/:id', clienteController.editarCliente)
 router.delete('/clientes/:id', clienteController.deletarCliente)
 module.exports = router
+    
