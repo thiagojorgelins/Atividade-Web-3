@@ -18,7 +18,7 @@ class CategoriaController {
   }
 
   exibirCategoriaPeloId = async (req, res) => {
-    const id = req.params.id
+    const { id } = req.params.id
     try {
       const categoria = await this.categoriaService.exibirCategoriaPeloId(id)
       return res.status(200).json(categoria)
@@ -33,13 +33,13 @@ class CategoriaController {
       res.json(categorias)
     } catch (error) {
       console.error('Erro ao obter categorias:', error)
-      res.status(500).json({ error: 'Erro ao obter categorias' })
+      res.status(500).json({ erro: 'Erro ao obter categorias' })
     }
 
   }
 
   deletarCategoria = async (req, res) => {
-    const id = req.params.id
+    const { id }= req.params.id
     const categoria = await this.categoriaService.exibirCategoriaPeloId(id)
     try {
       if (categoria === undefined) {

@@ -11,11 +11,65 @@ class ProdutoService{
         }
     }
 
-    async exibirTodosProdutos(){}
+    async exibirTodosProdutos(){
+        try {
+            const query = 'select * from Produtos'
+            const [results] = await connection.promise().query(query)
+            return results
+        } catch (error){
+            throw error
+        }
+    }
 
-    async exibirProdutoPorId(){}
+    async exibirProdutoPeloId(id){
+        try {
+            const query = 'select * from Produtos where id = ?'
+            const [results] = await connection.promise().query(query, [id])
+            return results[0]
+        } catch (error){
+            throw error
+        }
+    }
+    
+    async exibirProdutosPelaCategoria(id_categoria){
+        try {
+            const query = 'select * from Produtos where id_categoria = ?'
+            const [results] = await connection.promise().query(query, [id_categoria])
+            return results
+        } catch (error){
+            throw error
+        }
+    }
 
-    async deletarProduto(){}
+    async exibirProdutosPeloNome(nome){
+        try { 
+            const query = 'select * from Produtos where nome like ?'
+            const [results] = await connection.promise().query(query, [`%${nome}%`])
+            return results
+        } catch (error){    
+            throw error
+        }
+    }
+
+    async exibirProdutosPeloPreco(precoMin, precoMax) {
+        try {
+            const query = 'select * from Produtos where preco between ? and ? order by preco asc'
+            const [results] = await connection.promise().query(query, [precoMin, precoMax])
+            return results
+        } catch (error) {
+            throw error
+        }
+    }
+    
+
+    async deletarProduto(id){
+        try {
+            const query = 'delete from Produtos where id = ?'
+            await connection.promise().query(query, [id])
+        } catch (error){
+            throw error
+        }
+    }
 }
 
 module.exports = ProdutoService
