@@ -29,6 +29,16 @@ class CategoriaService {
             throw error
         }
     }
+
+    async editarCategoria(id, nome, descricao) {
+        try {
+            const query = 'update Categorias set nome = ?, descricao = ? where id = ?'
+            return await connection.promise().query(query, [nome, descricao, id])
+        } catch (error) {
+            throw error
+        }
+    }
+
     async deletarCategoria(id) {
         try {
             const query = 'delete from Categorias where id = ?'
