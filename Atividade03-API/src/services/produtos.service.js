@@ -61,6 +61,14 @@ class ProdutoService{
         }
     }
     
+    editarProduto = async (id, nome, descricao, preco, id_categoria, disponivel) => {
+        try {
+            const query = 'update Produtos set nome = ?, descricao = ?, preco = ?, id_categoria = ?, disponivel = ? where id = ?'
+            await connection.promise().query(query, [nome, descricao, preco, id_categoria, disponivel, id])
+        } catch (error) {
+            throw error
+        }
+    }
 
     async deletarProduto(id){
         try {

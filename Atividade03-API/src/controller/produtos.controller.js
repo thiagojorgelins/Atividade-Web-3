@@ -17,7 +17,7 @@ class ProdutoController {
                 const produto = await this.produtoService.createProduto(nome, descricao, preco, id_categoria, disponivel)
                 res.status(201).json({ msg: 'Produto cadastrado com sucesso!', produto })
             }
-            
+
         } catch (error) {
             res.status(500).json({ erro: error })
         }
@@ -43,10 +43,10 @@ class ProdutoController {
             }
         } catch (error) {
             res.status(500).json({ erro: error })
-        }   
+        }
     }
 
-    exibirProdutosPelaCategoria = async (req, res) => { 
+    exibirProdutosPelaCategoria = async (req, res) => {
         try {
             const { id_categoria } = req.params
             const produtos = await this.produtoService.exibirProdutosPelaCategoria(id_categoria)
@@ -87,7 +87,28 @@ class ProdutoController {
             res.status(500).json({ erro: error });
         }
     }
-    
+
+    editarProduto = async (req, res) => {
+        const { id } = req.params
+        const { nome, descricao, preco, id_categoria, disponivel } = req.body
+        try {
+            const produto = await this.produtoService.exibirProdutoPeloId(id)
+            if (produto == undefined) {
+                res.status(404).json({ erro: 'Produto não encontrado!' })
+
+            } else {
+                const categoria = await this.categoriaService.exibirCategoriaPeloId(id_categoria)
+                if (categoria == undefined) {
+                    res.status(400).json({ msg: 'Categoria não existe!' })
+                } else {
+                    await this.produtoService.editarProduto(id, nome, descricao, preco, id_categoria, disponivel)
+                    res.status(200).json({ msg: 'Produto editado com sucesso!' })
+                }
+            }
+        } catch (error) {
+            res.status(500).json({ erro: error })
+        }
+    }
     deletarProduto = async (req, res) => {
         try {
             const { id } = req.params

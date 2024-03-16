@@ -11,5 +11,6 @@ router.get('/produtos/nome/:nome', produtoController.exibirProdutosPeloNome)
 router.get('/produtos/preco/:precoMin/:precoMax', produtoController.exibirProdutosPeloPreco);
 router.post('/produtos', produtoController.createProduto)
 router.delete('/produtos/:id', produtoController.deletarProduto)
+router.put('/produtos/:id', produtoController.editarProduto)
 
 module.exports = router
