@@ -12,7 +12,7 @@ class CategoriaController {
       const categoria = await this.categoriaService.createCategorias(nome, descricao)
       res.status(201).json({ msg: 'Categoria cadastrada com sucesso!', categoria })
     } catch (error) {
-      res.status(500).json({ erro: error })
+      res.status(500).json({ erro: 'Erro ao tentar criar a categoria' })
     }
 
   }
@@ -37,6 +37,7 @@ class CategoriaController {
 
   }
 
+  
   editarCategoria = async (req, res) => {
     const { id } = req.params
     const { nome, descricao } = req.body

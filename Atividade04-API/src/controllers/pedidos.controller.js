@@ -6,13 +6,13 @@ class PedidoController {
     }
 
     createPedido = async (req, res) => {
-        const data_pedido = new Date()
-        const { id_cliente, status } = req.body
+        const dataPedido = new Date()
+        const { clienteId, status } = req.body
         try {
-            const pedido = await this.pedidoService.createPedido(id_cliente, data_pedido, status)
+            const pedido = await this.pedidoService.createPedido(clienteId, dataPedido, status)
             res.status(201).json({ msg: 'Pedido cadastrado com sucesso!', pedido })
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -21,7 +21,7 @@ class PedidoController {
             const pedidos = await this.pedidoService.exibirTodosPedidos()
             res.status(200).json(pedidos)
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -35,32 +35,32 @@ class PedidoController {
                 res.status(200).json(pedido)
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
     exibirPedidoPeloIdCliente = async (req, res) => {
         try {
-            const { id_cliente } = req.params
-            const pedido = await this.pedidoService.exibirPedidoPeloIdCliente(id_cliente)
+            const { clienteId } = req.params
+            const pedido = await this.pedidoService.exibirPedidoPeloIdCliente(clienteId)
             if (pedido == undefined) {
                 res.status(404).json({ erro: 'Pedido não encontrado!' })
             } else {
                 res.status(200).json(pedido)
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
     editarPedido = async (req, res) => {
         const { id } = req.params
-        const { id_cliente, data_pedido, status } = req.body
+        const { clienteId, dataPedido, status } = req.body
         try {
-            const pedido = await this.pedidoService.editarPedido(id, id_cliente, data_pedido, status)
+            const pedido = await this.pedidoService.editarPedido(id, clienteId, dataPedido, status)
             res.status(200).json({ msg: 'Pedido editado com sucesso!', pedido })
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -70,7 +70,7 @@ class PedidoController {
             await this.pedidoService.deletarPedido(id)
             res.status(200).json({ msg: 'Pedido deletado com sucesso!' })
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 }

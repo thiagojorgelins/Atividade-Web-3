@@ -8,18 +8,18 @@ class ProdutoController {
     }
 
     createProduto = async (req, res) => {
-        const { nome, descricao, preco, id_categoria, disponivel } = req.body
+        const { nome, descricao, preco, categoriaId, disponivel } = req.body
         try {
-            const categoria = await this.categoriaService.exibirCategoriaPeloId(id_categoria)
+            const categoria = await this.categoriaService.exibirCategoriaPeloId(categoriaId)
             if (categoria == undefined) {
                 res.status(400).json({ msg: 'Categoria não existe!' })
             } else {
-                const produto = await this.produtoService.createProduto(nome, descricao, preco, id_categoria, disponivel)
+                const produto = await this.produtoService.createProduto(nome, descricao, preco, categoriaId, disponivel)
                 res.status(201).json({ msg: 'Produto cadastrado com sucesso!', produto })
             }
 
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -28,7 +28,7 @@ class ProdutoController {
             const produtos = await this.produtoService.exibirTodosProdutos()
             res.status(200).json(produtos)
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -42,7 +42,7 @@ class ProdutoController {
                 res.status(200).json(produto)
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -56,7 +56,7 @@ class ProdutoController {
                 res.status(200).json(produtos)
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -70,7 +70,7 @@ class ProdutoController {
                 res.status(200).json(produtos)
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 
@@ -84,7 +84,7 @@ class ProdutoController {
                 res.status(200).json(produtos);
             }
         } catch (error) {
-            res.status(500).json({ erro: error });
+            res.status(500).json({ erro: error.message });
         }
     }
 
@@ -106,7 +106,7 @@ class ProdutoController {
                 }
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
     deletarProduto = async (req, res) => {
@@ -120,7 +120,7 @@ class ProdutoController {
                 res.status(200).json({ msg: 'Produto deletado com sucesso!', produto: produto })
             }
         } catch (error) {
-            res.status(500).json({ erro: error })
+            res.status(500).json({ erro: error.message })
         }
     }
 }
